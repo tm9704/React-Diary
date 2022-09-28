@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const DiaryEditor = () => {
+  const authorInput = useRef();
+  const contentInput = useRef();
+
   const [state, setState] = useState({
     author: "",
     content: "",
@@ -18,7 +21,18 @@ const DiaryEditor = () => {
   };
 
   const handleSubmit = () => {
-    console.log(state);
+    if (state.author.length < 1) {
+      //focus
+      authorInput.current.focus();
+      return;
+    }
+
+    if (state.content.length < 5) {
+      //focus
+      contentInput.current.focus();
+      return;
+    }
+
     alert("저장 성공");
   };
 
@@ -27,6 +41,8 @@ const DiaryEditor = () => {
       <h2>오늘의 일기</h2>
       <div>
         <input
+          ref={authorInput}
+          type="text"
           name="author"
           value={state.author}
           onChange={handleChangeState}
@@ -34,15 +50,19 @@ const DiaryEditor = () => {
       </div>
       <div>
         <textarea
+          ref={contentInput}
+          name="content"
+          type="text"
           value={state.content}
-          onChange={(e) => {
-            setState({
-              ...state, //길어지면 복잡하고 힘드니까 spread 연산자 사용
-              //순서를 바꾸면 안됨, 위에서 순서대로 새로운 객체를 만들어내기 때문
-              //   author: state.author,
-              content: e.target.value,
-            });
-          }}
+          onChange={handleChangeState}
+          //   (e) => {
+          //     setState({
+          //       ...state, //길어지면 복잡하고 힘드니까 spread 연산자 사용
+          //       //순서를 바꾸면 안됨, 위에서 순서대로 새로운 객체를 만들어내기 때문
+          //       //   author: state.author,
+          //       content: e.target.value,
+          //     });
+          //   }
         />
       </div>
       <div>
@@ -91,3 +111,12 @@ export default DiaryEditor;
 
 // 동작이 비슷한 State는 하나의 State로 묶을 수 있음
 // onChage도 함칠 수 있음
+
+// DOM요소를 선택할 수 있는 기능을 리액트가 포함
+// useRef
+// useRef()함수의 리턴은 React.MutableRefObject
+// MutableRefObject는 html 같은 DOM 요소를 접근할 수 있는 기능
+
+// authorInput.current.focus()
+// DOM요소를 선택하는 ref객체는 현재 가리키는 값을 current라는 프로퍼티로 가져와서 사용할 수 있음
+//
