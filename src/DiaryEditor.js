@@ -119,4 +119,6 @@ export default DiaryEditor;
 
 // authorInput.current.focus()
 // DOM요소를 선택하는 ref객체는 현재 가리키는 값을 current라는 프로퍼티로 가져와서 사용할 수 있음
-//
+
+//React에서 리스트 렌더링 하기
+// - 배열을 이용해서 React에서 List 렌더링해보고 개별적인 컴포넌트 만들기
